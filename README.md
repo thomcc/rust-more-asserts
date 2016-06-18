@@ -7,7 +7,7 @@ Small library providing some macros helpful for asserting.
 Use this crate by adding a `#[macro_use] extern crate more_asserts` to your code
 after adding it as a dependency.
 
-Complete docs (here)[http://thomcc.github.io/rust-more-asserts/more_asserts/index.html].
+Complete docs [here](http://thomcc.github.io/rust-more-asserts/more_asserts/index.html).
 
 The following macros are provided.
 
