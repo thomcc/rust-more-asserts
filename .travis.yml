@@ -1,14 +1,33 @@
+sudo: false
 language: rust
+# Do I need these?
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
 rust:
-  - stable
-  - beta
   - nightly
+  - beta
+  - stable
 matrix:
   allow_failures:
     - rust: nightly
-after_success: |
-    cargo doc \
-    && echo '<meta http-equiv=refresh content=0;url=more_asserts/index.html>' > target/doc/index.html && \
-    sudo pip install ghp-import && \
-    ghp-import -n target/doc && \
-    git push -qf https://${TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
+before_script:
+  - |
+      pip install 'travis-cargo<0.2' --user &&
+      export PATH=$HOME/.local/bin:$PATH
+
+script:
+  - |
+      travis-cargo build &&
+      travis-cargo test &&
+      travis-cargo --only stable doc
+
+after_success:
+  - travis-cargo --only stable doc-upload
+
+env:
+  global:
+    secure: OuVHV4VFeW0Y5RhzeNEhAIR3Cvf6jNx2FWi4PJCJiRBWh+RCR+YtPPfbaXPxDFQ8oKL5i3+o8ny/u6iNtnGz5F27Vj25l/kgpqzUGaiYx+gcbGFP/aVgfKq5yvbFj8LBRXhiHhQvLc5MXTCoHqATAVeq1pH/L/WlvDCRTv5GAC1NtHm8/gUq9RLkIxZ22OBzb9fM7M4HzrHg3zbH1t+SXt1dAIPdBIKVybVKVEzjiLGhUJVd7qqYkHN9G0RlttYlYKC3xSjIDZKGuFMc8Ze/kIybbWZxExXQSLsbs20uaYtMNgHBfFi/+kLalTGr8PpmpC2gh2Ah+V9Sc3N4knacs80Gb+NNrbMxBcXoHGWYnIhWCOY70qUXUFxfq1+vRiZcAn6Gf9p0w5SHGlodZFxudBT3Jn0p8QYSYrdhQugSubdJVdWhS0wCddVarMJ0qIMEpgTlrXP4vN7PsVGT/d41H3ZVVI9lEA4vPl59ODuV4tenvaW/0yD0IBM0sEvtwtumrS2owmumaPRI8BOBPSs5Bx8Uyv5LZUkH2hbNw8OYQvxFhMUdVCo21Ux1nqVDMjpnKbxeohA6Z9VStVaVIQQo9c6X0A0fX3HPxQuLztvm2A+ZfMzvsZ82gtzTW1c5a+dxvznJxKNajMVMTXGRMvTSAz178I2LzXVvEWbvTA/+zYU=
