@@ -4,9 +4,10 @@ Small library providing some macros helpful for asserting.
 
 ## Documentation
 
-The following macros are provided.
+Use this crate by adding a `#[macro_use] extern crate more_asserts` to your code
+after adding it as a dependency.
 
-Note that `assert_eq!` and `debug_assert_eq!` are not provided as those are in the standard library.
+The following macros are provided.
 
 - `assert_ne!(left, right)`: Panics if `!(left != right)`.
 - `assert_lt!(left, right)`: Panics if `!(left < right)`.
@@ -23,6 +24,8 @@ Note that `assert_eq!` and `debug_assert_eq!` are not provided as those are in t
   code is a bug that you absolutely want to know about, but there's a sane way to
   proceed in production code regardless. Forwards any arguments passed to it to
   `unreachable!`.
+
+Note that `assert_eq!` and `debug_assert_eq!` are not provided as those are in the standard library.
 
 ## License
 
