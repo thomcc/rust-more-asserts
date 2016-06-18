@@ -167,7 +167,7 @@ macro_rules! debug_assert_ge {
 
 
 /// Panics if reached. This is a variant of the standard library's `unreachable!`
-/// macro that is controlled by `cfg!(debug_assertations)`.
+/// macro that is controlled by `cfg!(debug_assertions)`.
 ///
 /// Useful mainly when reaching the code is a bug that you absolutely want to
 /// know about, but there's a sane way to proceed in production code regardless.
