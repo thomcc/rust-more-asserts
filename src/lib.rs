@@ -90,7 +90,7 @@ macro_rules! assert_ge {
 ///
 /// Prints the values out on panic.
 ///
-/// This macro is disabled by default in optimized builds, unless 
+/// This macro is disabled by default in optimized builds, unless
 /// `-C debug-assertions` is provided to the compiler.
 #[macro_export]
 macro_rules! debug_assert_ne {
@@ -106,7 +106,7 @@ macro_rules! debug_assert_ne {
 ///
 /// Prints the values out on panic.
 ///
-/// This macro is disabled by default in optimized builds, unless 
+/// This macro is disabled by default in optimized builds, unless
 /// `-C debug-assertions` is provided to the compiler.
 #[macro_export]
 macro_rules! debug_assert_lt {
@@ -122,7 +122,7 @@ macro_rules! debug_assert_lt {
 ///
 /// Prints the values out on panic.
 ///
-/// This macro is disabled by default in optimized builds, unless 
+/// This macro is disabled by default in optimized builds, unless
 /// `-C debug-assertions` is provided to the compiler.
 #[macro_export]
 macro_rules! debug_assert_gt {
@@ -138,7 +138,7 @@ macro_rules! debug_assert_gt {
 ///
 /// Prints the values out on panic.
 ///
-/// This macro is disabled by default in optimized builds, unless 
+/// This macro is disabled by default in optimized builds, unless
 /// `-C debug-assertions` is provided to the compiler.
 #[macro_export]
 macro_rules! debug_assert_le {
@@ -154,7 +154,7 @@ macro_rules! debug_assert_le {
 ///
 /// Prints the values out on panic.
 ///
-/// This macro is disabled by default in optimized builds, unless 
+/// This macro is disabled by default in optimized builds, unless
 /// `-C debug-assertions` is provided to the compiler.
 #[macro_export]
 macro_rules! debug_assert_ge {
