@@ -8,7 +8,7 @@ matrix:
     - rust: nightly
 after_success: |
     cargo doc \
-    && echo '<meta http-equiv=refresh content=0;url=YOURLIBNAME/index.html>' > target/doc/index.html && \
+    && echo '<meta http-equiv=refresh content=0;url=more_asserts/index.html>' > target/doc/index.html && \
     sudo pip install ghp-import && \
     ghp-import -n target/doc && \
     git push -qf https://${TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
