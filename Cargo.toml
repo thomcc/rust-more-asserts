@@ -1,0 +1,8 @@
+[package]
+name = "more-asserts"
+version = "0.1.0"
+authors = ["Thom Chiovoloni <chiovolonit@gmail.com>"]
+description = "Small library providing additional assert and debug_assert macros."
+license = "CC0-1.0"
+
+[dependencies]
