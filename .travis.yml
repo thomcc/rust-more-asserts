@@ -1,18 +1,12 @@
 sudo: false
 language: rust
+# Not sure I need these...
 addons:
   apt:
     packages:
     - libcurl4-openssl-dev
     - libelf-dev
     - libdw-dev
-rust:
-- nightly
-- beta
-- stable
-matrix:
-  allow_failures:
-  - rust: nightly
 before_script:
 - |
   pip install 'travis-cargo<0.2' --user &&

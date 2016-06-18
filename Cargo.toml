@@ -5,6 +5,7 @@ authors = ["Thom Chiovoloni <chiovolonit@gmail.com>"]
 description = "Small library providing additional assert and debug_assert macros."
 keywords = ["assert", "debug_assert", "debug", "assertions"]
 homepage = "https://github.com/thomcc/rust-more-asserts"
+documentation = "http://thomcc.github.io/rust-more-asserts/more_asserts/index.html"
 repository = "https://github.com/thomcc/rust-more-asserts"
 license = "CC0-1.0"
 
