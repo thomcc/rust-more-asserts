@@ -44,27 +44,7 @@
 //! }
 //! ```
 
-#[doc(hidden)]
-#[macro_export]
-macro_rules! cmp_assert_impl {
-    ($li:ident, $ri:ident, $cmp:expr, $le:expr, $re:expr) => ({
-        let ($li, $ri) = (&($le), &($re));
-        if !($cmp) {
-            panic!("assertion failed: `{}`\n  left: `{:?}`,\n right: `{:?}`",
-                   stringify!($cmp), $li, $ri);
-        }
-    });
-    ($li:ident, $ri:ident, $cmp:expr, $le:expr, $re:expr, ) => ({
-        cmp_assert_impl!($li, $ri, $cmp, $le, $re);
-    });
-    ($li:ident, $ri:ident, $cmp:expr, $le:expr, $re:expr, $($a:tt)+) => ({
-        let ($li, $ri) = (&($le), &($re));
-        if !($cmp) {
-            panic!("assertion failed: `{}`\n  left: `{:?}`,\n right: `{:?}`: {}",
-                   stringify!($cmp), $li, $ri, format_args!($($a)+));
-        }
-    })
-}
+#![deny(missing_docs)]
 
 /// Panics if the first expression is not strictly less than the second.
 /// Requires that the values be comparable with `<`.
@@ -89,9 +69,23 @@ macro_rules! cmp_assert_impl {
 /// ```
 #[macro_export]
 macro_rules! assert_lt {
-    ($($a:tt)+) => ({
-        cmp_assert_impl!(left, right, left < right, $($a)+);
+    ($left:expr, $right:expr) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left < right) {
+            panic!("assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`",
+                   left, right);
+        }
     });
+    ($left:expr, $right:expr, ) => ({
+        assert_lt!($left, $right);
+    });
+    ($left:expr, $right:expr, $($msg_args:tt)+) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left < right) {
+            panic!("assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+                   left, right, format_args!($($msg_args)+));
+        }
+    })
 }
 
 /// Panics if the first expression is not strictly greater than the second.
@@ -117,9 +111,23 @@ macro_rules! assert_lt {
 /// ```
 #[macro_export]
 macro_rules! assert_gt {
-    ($($a:tt)+) => ({
-        cmp_assert_impl!(left, right, left > right, $($a)+);
+    ($left:expr, $right:expr) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left > right) {
+            panic!("assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`",
+                   left, right);
+        }
     });
+    ($left:expr, $right:expr, ) => ({
+        assert_gt!($left, $right);
+    });
+    ($left:expr, $right:expr, $($msg_args:tt)+) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left > right) {
+            panic!("assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+                   left, right, format_args!($($msg_args)+));
+        }
+    })
 }
 
 /// Panics if the first expression is not less than or equal to the second.
@@ -146,9 +154,23 @@ macro_rules! assert_gt {
 /// ```
 #[macro_export]
 macro_rules! assert_le {
-    ($($a:tt)+) => ({
-        cmp_assert_impl!(left, right, left <= right, $($a)+);
+    ($left:expr, $right:expr) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left <= right) {
+            panic!("assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`",
+                   left, right);
+        }
     });
+    ($left:expr, $right:expr, ) => ({
+        assert_le!($left, $right);
+    });
+    ($left:expr, $right:expr, $($msg_args:tt)+) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left <= right) {
+            panic!("assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+                   left, right, format_args!($($msg_args)+));
+        }
+    })
 }
 
 /// Panics if the first expression is not less than or equal to the second.
@@ -175,9 +197,23 @@ macro_rules! assert_le {
 /// ```
 #[macro_export]
 macro_rules! assert_ge {
-    ($($a:tt)+) => ({
-        cmp_assert_impl!(left, right, left >= right, $($a)+);
+    ($left:expr, $right:expr) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left >= right) {
+            panic!("assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`",
+                   left, right);
+        }
     });
+    ($left:expr, $right:expr, ) => ({
+        assert_ge!($left, $right);
+    });
+    ($left:expr, $right:expr, $($msg_args:tt)+) => ({
+        let (left, right) = (&($left), &($right));
+        if !(left >= right) {
+            panic!("assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+                   left, right, format_args!($($msg_args)+));
+        }
+    })
 }
 
 /// Same as `assert_lt!` in debug builds or release builds where the
