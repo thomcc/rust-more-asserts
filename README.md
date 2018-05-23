@@ -1,36 +1,29 @@
-# More Asserts
+# [More Asserts](https://crates.io/crates/more-asserts) (for Rust).
 
-Small library providing some macros helpful for asserting.
+[![Docs](https://docs.rs/more-asserts/badge.svg)](https://docs.rs/more-asserts)
 
-## Documentation
+Small library providing assertion macros similar to the `{debug_,}assert_{eq,ne}` macros in the stdlib.
 
-Use this crate by adding a `#[macro_use] extern crate more_asserts` to your code
-after adding it as a dependency.
+## Usage
 
-Complete docs [here](http://thomcc.github.io/rust-more-asserts/more_asserts/index.html).
+1. Add `more-asserts = "0.2"` to your `Cargo.toml`.
+2. Add `#[macro_use] extern crate more_asserts` to your code.
 
-The following macros are provided.
+After this, the following macros are available in your code (see [the documentation](https://docs.rs/more-asserts) for more info):
 
-- `assert_ne!(left, right)`: Panics if `!(left != right)`.
-- `assert_lt!(left, right)`: Panics if `!(left < right)`.
+- `assert_lt!(left, right)`: Panics if `!(left < right)`. Optionally can take format arguments
 - `assert_gt!(left, right)`: Panics if `!(left > right)`.
 - `assert_le!(left, right)`: Panics if `!(left <= right)`.
 - `assert_ge!(left, right)`: Panics if `!(left >= right)`.
-- `debug_assert_ne!(left, right)`: Variant of `assert_ne!` controlled by `cfg!(debug_assertions)`.
 - `debug_assert_lt!(left, right)`: Variant of `assert_lt!` controlled by `cfg!(debug_assertions)`.
 - `debug_assert_gt!(left, right)`: Variant of `assert_gt!` controlled by `cfg!(debug_assertions)`.
 - `debug_assert_le!(left, right)`: Variant of `assert_le!` controlled by `cfg!(debug_assertions)`.
 - `debug_assert_ge!(left, right)`: Variant of `assert_ge!` controlled by `cfg!(debug_assertions)`.
 - `debug_unreachable!(...)`: Variant of the standard library's `unreachable!`
-  that is controlled by `cfg!(debug_assertations)`. Usful mainly when reaching the
-  code is a bug that you absolutely want to know about, but there's a sane way to
-  proceed in production code regardless. Forwards any arguments passed to it to
-  `unreachable!`.
+  that is controlled by `cfg!(debug_assertations)`.
 
-Note that `assert_eq!` and `debug_assert_eq!` are not provided as those are in the standard library.
+Note that `assert_eq!`, `assert_ne!`, `debug_assert_eq!`, and `debug_assert_ne!` are not provided, as those are in the standard library.
 
 ## License
 
 [CC0 (public domain)](https://creativecommons.org/publicdomain/zero/1.0/).
-
-
