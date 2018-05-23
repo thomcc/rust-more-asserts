@@ -44,7 +44,6 @@
 //! }
 //! ```
 
-
 #[doc(hidden)]
 #[macro_export]
 macro_rules! cmp_assert_impl {
@@ -90,7 +89,9 @@ macro_rules! cmp_assert_impl {
 /// ```
 #[macro_export]
 macro_rules! assert_lt {
-    ($($a:tt)+) => ({ cmp_assert_impl!(left, right, left < right, $($a)+); });
+    ($($a:tt)+) => ({
+        cmp_assert_impl!(left, right, left < right, $($a)+);
+    });
 }
 
 /// Panics if the first expression is not strictly greater than the second.
@@ -116,7 +117,9 @@ macro_rules! assert_lt {
 /// ```
 #[macro_export]
 macro_rules! assert_gt {
-    ($($a:tt)+) => ({ cmp_assert_impl!(left, right, left > right, $($a)+); });
+    ($($a:tt)+) => ({
+        cmp_assert_impl!(left, right, left > right, $($a)+);
+    });
 }
 
 /// Panics if the first expression is not less than or equal to the second.
@@ -143,7 +146,9 @@ macro_rules! assert_gt {
 /// ```
 #[macro_export]
 macro_rules! assert_le {
-    ($($a:tt)+) => ({ cmp_assert_impl!(left, right, left <= right, $($a)+); });
+    ($($a:tt)+) => ({
+        cmp_assert_impl!(left, right, left <= right, $($a)+);
+    });
 }
 
 /// Panics if the first expression is not less than or equal to the second.
@@ -170,7 +175,9 @@ macro_rules! assert_le {
 /// ```
 #[macro_export]
 macro_rules! assert_ge {
-    ($($a:tt)+) => ({ cmp_assert_impl!(left, right, left >= right, $($a)+); });
+    ($($a:tt)+) => ({
+        cmp_assert_impl!(left, right, left >= right, $($a)+);
+    });
 }
 
 /// Same as `assert_lt!` in debug builds or release builds where the
@@ -195,7 +202,11 @@ macro_rules! assert_ge {
 /// ```
 #[macro_export]
 macro_rules! debug_assert_lt {
-    ($($arg:tt)+) => { if cfg!(debug_assertions) { assert_lt!($($arg)+); } }
+    ($($arg:tt)+) => {
+        if cfg!(debug_assertions) {
+            assert_lt!($($arg)+);
+        }
+    }
 }
 
 /// Same as `assert_gt!` in debug builds or release builds where the
@@ -220,7 +231,11 @@ macro_rules! debug_assert_lt {
 /// ```
 #[macro_export]
 macro_rules! debug_assert_gt {
-    ($($arg:tt)+) => { if cfg!(debug_assertions) { assert_gt!($($arg)+); } }
+    ($($arg:tt)+) => {
+        if cfg!(debug_assertions) {
+            assert_gt!($($arg)+);
+        }
+    }
 }
 
 /// Same as `assert_le!` in debug builds or release builds where the
@@ -246,7 +261,11 @@ macro_rules! debug_assert_gt {
 /// ```
 #[macro_export]
 macro_rules! debug_assert_le {
-    ($($arg:tt)+) => { if cfg!(debug_assertions) { assert_le!($($arg)+); } }
+    ($($arg:tt)+) => {
+        if cfg!(debug_assertions) {
+            assert_le!($($arg)+);
+        }
+    }
 }
 
 /// Same as `assert_ge!` in debug builds or release builds where the
@@ -272,7 +291,11 @@ macro_rules! debug_assert_le {
 /// ```
 #[macro_export]
 macro_rules! debug_assert_ge {
-    ($($arg:tt)+) => { if cfg!(debug_assertions) { assert_ge!($($arg)+); } }
+    ($($arg:tt)+) => {
+        if cfg!(debug_assertions) {
+            assert_ge!($($arg)+);
+        }
+    }
 }
 
 /// Panics if reached. This is a variant of the standard library's `unreachable!`
