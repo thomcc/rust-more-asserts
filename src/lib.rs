@@ -173,7 +173,7 @@ macro_rules! assert_le {
     })
 }
 
-/// Panics if the first expression is not less than or equal to the second.
+/// Panics if the first expression is not greater than or equal to the second.
 /// Requires that the values be comparable with `>=`.
 ///
 /// On failure, panics and prints the values out in a manner similar to
