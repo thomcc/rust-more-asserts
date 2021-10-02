@@ -71,20 +71,16 @@
 macro_rules! assert_lt {
     ($left:expr, $right:expr) => ({
         let (left, right) = (&($left), &($right));
-        if !(left < right) {
-            panic!("assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`",
+        assert!(left < right, "assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`",
                    left, right);
-        }
     });
     ($left:expr, $right:expr, ) => ({
         assert_lt!($left, $right);
     });
     ($left:expr, $right:expr, $($msg_args:tt)+) => ({
         let (left, right) = (&($left), &($right));
-        if !(left < right) {
-            panic!("assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+        assert!(left < right, "assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
                    left, right, format_args!($($msg_args)+));
-        }
     })
 }
 
@@ -113,20 +109,16 @@ macro_rules! assert_lt {
 macro_rules! assert_gt {
     ($left:expr, $right:expr) => ({
         let (left, right) = (&($left), &($right));
-        if !(left > right) {
-            panic!("assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`",
+        assert!(left > right, "assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`",
                    left, right);
-        }
     });
     ($left:expr, $right:expr, ) => ({
         assert_gt!($left, $right);
     });
     ($left:expr, $right:expr, $($msg_args:tt)+) => ({
         let (left, right) = (&($left), &($right));
-        if !(left > right) {
-            panic!("assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+        assert!(left > right, "assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
                    left, right, format_args!($($msg_args)+));
-        }
     })
 }
 
@@ -156,20 +148,16 @@ macro_rules! assert_gt {
 macro_rules! assert_le {
     ($left:expr, $right:expr) => ({
         let (left, right) = (&($left), &($right));
-        if !(left <= right) {
-            panic!("assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`",
+        assert!(left <= right, "assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`",
                    left, right);
-        }
     });
     ($left:expr, $right:expr, ) => ({
         assert_le!($left, $right);
     });
     ($left:expr, $right:expr, $($msg_args:tt)+) => ({
         let (left, right) = (&($left), &($right));
-        if !(left <= right) {
-            panic!("assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+        assert!(left <= right, "assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
                    left, right, format_args!($($msg_args)+));
-        }
     })
 }
 
@@ -199,20 +187,16 @@ macro_rules! assert_le {
 macro_rules! assert_ge {
     ($left:expr, $right:expr) => ({
         let (left, right) = (&($left), &($right));
-        if !(left >= right) {
-            panic!("assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`",
+        assert!(left >= right, "assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`",
                    left, right);
-        }
     });
     ($left:expr, $right:expr, ) => ({
         assert_ge!($left, $right);
     });
     ($left:expr, $right:expr, $($msg_args:tt)+) => ({
         let (left, right) = (&($left), &($right));
-        if !(left >= right) {
-            panic!("assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
+        assert!(left >= right, "assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
                    left, right, format_args!($($msg_args)+));
-        }
     })
 }
 
