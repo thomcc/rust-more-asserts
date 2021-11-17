@@ -44,7 +44,11 @@
 //! }
 //! ```
 
+#![no_std]
 #![deny(missing_docs)]
+
+#[cfg(test)]
+extern crate std;
 
 /// Panics if the first expression is not strictly less than the second.
 /// Requires that the values be comparable with `<`.
