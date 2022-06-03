@@ -2,7 +2,7 @@
 
 [![Docs](https://docs.rs/more-asserts/badge.svg)](https://docs.rs/more-asserts)
 [![Latest Version](https://img.shields.io/crates/v/arcstr.svg)](https://crates.io/crates/more-asserts)
-<!-- ![Minimum Rust Version](https://img.shields.io/badge/MSRV%201.38.0-blue.svg) -->
+![Minimum Rust Version](https://img.shields.io/badge/MSRV%201.46.0-blue.svg)
 
 Small library providing assertion macros similar to the `{debug_,}assert_{eq,ne}` macros in the stdlib.
 
