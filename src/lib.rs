@@ -53,18 +53,53 @@
 #![no_std]
 #![deny(missing_docs)]
 
-// for use from within the macros.
+mod inner;
+
+// From use with macros. Not public API.
 #[doc(hidden)]
 pub extern crate core as __core;
 
+// From use with macros. Not public API.
+#[doc(hidden)]
+pub mod __private {
+    pub use crate::inner::AssertType;
+    // Wrap the outlined functions with generic versions in an effort to improve
+    // the error message given when using one of these macros on a type which
+    // doesn't impl `core::fmt::Debug`.
+    #[cold]
+    #[track_caller]
+    pub fn assert_failed_nomsg<A, B>(left: &A, right: &B, ty: AssertType) -> !
+    where
+        A: core::fmt::Debug,
+        B: core::fmt::Debug,
+    {
+        crate::inner::assert_failed_nomsg_impl(left, right, ty);
+    }
+
+    #[cold]
+    #[track_caller]
+    #[doc(hidden)]
+    pub fn assert_failed_msg<A, B>(
+        left: &A,
+        right: &B,
+        ty: AssertType,
+        msg: core::fmt::Arguments<'_>,
+    ) -> !
+    where
+        A: core::fmt::Debug,
+        B: core::fmt::Debug,
+    {
+        crate::inner::assert_failed_msg_impl(left, right, ty, msg);
+    }
+}
+
 /// Panics if the first expression is not strictly less than the second.
-/// Requires that the values be [comparable with `<`](core::cmp::PartialOrd).
+///
+/// Requires that the values implement [`Debug`](core::fmt::Debug) and
+/// [`PartialOrd`](core::cmp::PartialOrd).
 ///
 /// On failure, panics and prints the values out in a manner similar to
 /// [`assert_eq!`](core::assert_eq).
-///
-/// Optionally may take an additional message to display on failure, which is
-/// formatted using standard format syntax.
 ///
 /// # Example
 ///
@@ -80,9 +115,8 @@ macro_rules! assert_lt {
     ($left:expr, $right:expr) => {
         match (&$left, &$right) {
             (left, right) => if !(left < right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`",
-                    left, right,
+                $crate::__private::assert_failed_nomsg(
+                    left, right, $crate::__private::AssertType::Lt,
                 );
             }
         }
@@ -93,9 +127,9 @@ macro_rules! assert_lt {
     ($left:expr, $right:expr, $($msg_args:tt)+) => {
         match (&$left, &$right) {
             (left, right) => if !(left < right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left < right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
-                    left, right, $crate::__core::format_args!($($msg_args)+),
+                $crate::__private::assert_failed_msg(
+                    left, right, $crate::__private::AssertType::Lt,
+                    $crate::__core::format_args!($($msg_args)+),
                 );
             }
         }
@@ -103,13 +137,12 @@ macro_rules! assert_lt {
 }
 
 /// Panics if the first expression is not strictly greater than the second.
-/// Requires that the values be [comparable with `>`](core::cmp::PartialOrd).
+///
+/// Requires that the values implement [`Debug`](core::fmt::Debug) and
+/// [`PartialOrd`](core::cmp::PartialOrd).
 ///
 /// On failure, panics and prints the values out in a manner similar to
 /// prelude's [`assert_eq!`](core::assert_eq).
-///
-/// Optionally may take an additional message to display on failure, which is
-/// formatted using standard format syntax.
 ///
 /// # Example
 ///
@@ -123,11 +156,10 @@ macro_rules! assert_lt {
 #[macro_export]
 macro_rules! assert_gt {
     ($left:expr, $right:expr) => {
-        match (&($left), &($right)) {
+        match (&$left, &$right) {
             (left, right) => if !(left > right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`",
-                    left, right,
+                $crate::__private::assert_failed_nomsg(
+                    left, right, $crate::__private::AssertType::Gt,
                 );
             }
         }
@@ -138,9 +170,9 @@ macro_rules! assert_gt {
     ($left:expr, $right:expr, $($msg_args:tt)+) => {
         match (&$left, &$right) {
             (left, right) => if !(left > right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left > right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
-                    left, right, $crate::__core::format_args!($($msg_args)+),
+                $crate::__private::assert_failed_msg(
+                    left, right, $crate::__private::AssertType::Gt,
+                    $crate::__core::format_args!($($msg_args)+),
                 );
             }
         }
@@ -148,13 +180,12 @@ macro_rules! assert_gt {
 }
 
 /// Panics if the first expression is not less than or equal to the second.
-/// Requires that the values be [comparable with `<=`](core::cmp::PartialOrd).
+///
+/// Requires that the values implement [`Debug`](core::fmt::Debug) and
+/// [`PartialOrd`](core::cmp::PartialOrd).
 ///
 /// On failure, panics and prints the values out in a manner similar to
 /// prelude's [`assert_eq!`](core::assert_eq).
-///
-/// Optionally may take an additional message to display on failure, which
-/// is formatted using standard format syntax.
 ///
 /// # Example
 ///
@@ -171,9 +202,8 @@ macro_rules! assert_le {
     ($left:expr, $right:expr) => {
         match (&$left, &$right) {
             (left, right) => if !(left <= right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`",
-                    left, right,
+                $crate::__private::assert_failed_nomsg(
+                    left, right, $crate::__private::AssertType::Le,
                 );
             }
         }
@@ -184,9 +214,9 @@ macro_rules! assert_le {
     ($left:expr, $right:expr, $($msg_args:tt)+) => {
         match (&$left, &$right) {
             (left, right) => if !(left <= right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left <= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
-                    left, right, $crate::__core::format_args!($($msg_args)+),
+                $crate::__private::assert_failed_msg(
+                    left, right, $crate::__private::AssertType::Le,
+                    $crate::__core::format_args!($($msg_args)+),
                 );
             }
         }
@@ -194,7 +224,9 @@ macro_rules! assert_le {
 }
 
 /// Panics if the first expression is not greater than or equal to the second.
-/// Requires that the values be [comparable with `>=`](core::cmp::PartialOrd).
+///
+/// Requires that the values implement [`Debug`](core::fmt::Debug) and
+/// [`PartialOrd`](core::cmp::PartialOrd).
 ///
 /// On failure, panics and prints the values out in a manner similar to
 /// prelude's [`assert_eq!`](core::assert_eq).
@@ -217,9 +249,8 @@ macro_rules! assert_ge {
     ($left:expr, $right:expr) => {
         match (&$left, &$right) {
             (left, right) => if !(left >= right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`",
-                    left, right,
+                $crate::__private::assert_failed_nomsg(
+                    left, right, $crate::__private::AssertType::Ge,
                 );
             }
         }
@@ -230,9 +261,9 @@ macro_rules! assert_ge {
     ($left:expr, $right:expr, $($msg_args:tt)+) => {
         match (&$left, &$right) {
             (left, right) => if !(left >= right) {
-                $crate::__core::panic!(
-                    "assertion failed: `(left >= right)`\n  left: `{:?}`,\n right: `{:?}`: {}",
-                    left, right, $crate::__core::format_args!($($msg_args)+),
+                $crate::__private::assert_failed_msg(
+                    left, right, $crate::__private::AssertType::Ge,
+                    $crate::__core::format_args!($($msg_args)+),
                 );
             }
         }
@@ -283,10 +314,8 @@ macro_rules! debug_assert_gt {
     };
 }
 
-/// Same as [`assert_le!`] in builds with debug assertions enabled.
-///
-/// In release builds, and other builds without debug assertions enabled,
-/// vanishes without a trace.
+/// Same as [`assert_le!`] in builds with debug assertions enabled, and a no-op
+/// otherwise.
 ///
 /// # Example
 ///
@@ -308,10 +337,8 @@ macro_rules! debug_assert_le {
     };
 }
 
-/// Same as [`assert_ge!`] in builds with debug assertions enabled.
-///
-/// In release builds, and other builds without debug assertions enabled,
-/// vanishes without a trace.
+/// Same as [`assert_ge!`] in builds with debug assertions enabled, and a no-op
+/// otherwise.
 ///
 /// # Example
 ///
@@ -333,18 +360,20 @@ macro_rules! debug_assert_ge {
     };
 }
 
-/// Panics if reached. This is a variant of the standard library's
-/// `unreachable!` macro that is controlled by `cfg!(debug_assertions)`.
+/// Panics if reached when debug assertions are enabled.
 ///
-/// Same as prelude's [`unreachable!`](core::unreachable) in builds with debug
-/// assertions enabled. For all other builds, vanishes without a trace.
+/// This is a variant of the standard library's [`unreachable!`] macro that is
+/// controlled by `cfg!(debug_assertions)`. For builds without debug assertions
+/// enabled (such as typical release builds), it is a no-op.
 ///
 /// # Example
 ///
 /// ```rust
+/// use more_asserts as ma;
+///
 /// let mut value = 0.5;
 /// if value < 0.0 {
-///     more_asserts::debug_unreachable!("Value out of range {}", value);
+///     ma::debug_unreachable!("Value out of range {}", value);
 ///     value = 0.0;
 /// }
 /// ```
