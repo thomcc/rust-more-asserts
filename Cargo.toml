@@ -1,6 +1,6 @@
 [package]
 name = "more-asserts"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["Thom Chiovoloni <chiovolonit@gmail.com>"]
 description = "Small library providing additional assert_* and debug_assert_* macros."
 keywords = ["assert", "debug_assert", "debug", "assertions", "testing"]
