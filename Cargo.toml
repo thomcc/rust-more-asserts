@@ -7,7 +7,7 @@ keywords = ["assert", "debug_assert", "debug", "assertions", "testing"]
 homepage = "https://github.com/thomcc/rust-more-asserts"
 documentation = "https://docs.rs/more-asserts"
 repository = "https://github.com/thomcc/rust-more-asserts"
-license = "CC0-1.0"
+license = "Unlicense OR MIT OR Apache-2.0 OR CC0-1.0"
 edition = "2018"
 
 [dependencies]

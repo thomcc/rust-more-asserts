@@ -33,4 +33,6 @@ ma::assert_gt!(
 
 ## License
 
-[CC0 (public domain)](https://creativecommons.org/publicdomain/zero/1.0/).
+Public domain as explained by either [the Unlicense](./UNLICENSE) or [CC0](./LICENSE-CC0). If neither of these are acceptable, you can also choose use it under the MIT/Apache2 combo typical of Rust code.
+
+*Yes, this is a lot. It was originally just "public domain as explained by CC0" (since CC0 was the public domain-alike license preferred by lawyers), but then [CC0 fell out of favor](https://lists.fedoraproject.org/archives/list/legal@lists.fedoraproject.org/thread/RRYM3CLYJYW64VSQIXY6IF3TCDZGS6LM/), so I added the others as alternatives: Unlicense as a (hopefully) better public domain analogue, and MIT/Apache2 since (I know some folks dislike the Unlicense and) Rust will implode if those ever become a problem.*
